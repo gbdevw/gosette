@@ -1,6 +1,8 @@
+[![Go Reference](https://pkg.go.dev/badge/github.com/gbdevw/gosette.svg)](https://pkg.go.dev/github.com/gbdevw/gosette)
+![Coverage](https://img.shields.io/badge/Coverage-100.0%25-brightgreen)
 # Gosette
 
-a HTTP server implementation which can be used to mock HTTP responses and spy on incoming requests and outgoing responses. The primary goal of this package is to provide an easy way to perform local end-to-end tests of HTTP clients against a local HTTP server.
+A HTTP server implementation which can be used to mock HTTP responses and spy on incoming requests and outgoing responses. The primary goal of this package is to provide an easy way to perform local end-to-end tests of HTTP clients against a local HTTP server.
 
 ## Features
 
@@ -19,14 +21,14 @@ a HTTP server implementation which can be used to mock HTTP responses and spy on
 testsrv := NewHTTPTestServer(nil)
 testsrv.Start()
 
-// Configure a predefined response
+// Configure a predefined response that will be served indefinitly
 testsrv.PushPredefinedServerResponse(&PredefinedServerResponse{
-		Status: http.StatusOK,
-		Headers: map[string][]string{
-			"Content-Type": []string{"text/plain"},
-		},
-		Body: []byte("Hello"),
-	})
+	Status: http.StatusOK,
+	Headers: map[string][]string{
+		"Content-Type": []string{"application/json"},
+	},
+	Body: []byte(`{"test": "success"}`),
+})
 
 // Get a http.Client which trusts the server certificate if TLS is enabled
 client := testsrv.Client()
