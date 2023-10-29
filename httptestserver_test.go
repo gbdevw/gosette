@@ -76,7 +76,7 @@ func (suite *HTTPTestServerUnitTestSuite) TestWithSingleJsonResponse() {
 	suite.hts.PushPredefinedServerResponse(&PredefinedServerResponse{
 		Status: expectedStatusCode,
 		Headers: map[string][]string{
-			"Content-Type": []string{expectedContentType},
+			"Content-Type": {expectedContentType},
 		},
 		Body: []byte(predefinedJsonResponse),
 	})
@@ -348,7 +348,7 @@ func (suite *HTTPTestServerUnitTestSuite) TestServeHTTPErrPaths() {
 	suite.hts.PushPredefinedServerResponse(&PredefinedServerResponse{
 		Status: http.StatusOK,
 		Headers: map[string][]string{
-			"Content-Type": []string{"text/plain"},
+			"Content-Type": {"text/plain"},
 		},
 		Body: []byte("hello world!"),
 	})
