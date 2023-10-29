@@ -2,7 +2,7 @@
 ![Coverage](https://img.shields.io/badge/Coverage-100.0%25-brightgreen)
 # Gosette
 
-A HTTP server implementation which can be used to mock HTTP responses and spy on incoming requests and outgoing responses. The primary goal of this package is to provide an easy way to perform local end-to-end tests of HTTP clients against a local HTTP server.
+A HTTP server implementation which can be used to mock HTTP responses and spy on incoming HTTP requests and outgoing HTTP responses. The primary goal of this package is to provide an easy way to perform local end-to-end tests of HTTP clients against a local HTTP server.
 
 ## Features
 
@@ -35,7 +35,26 @@ client := testsrv.Client()
 
 // Send a request to the http test server
 resp, err := client.Get(testsrv.GetBaseURL())
+...
 
-// Inspect recorded request, request body and response
+// Pop recorded request, request body and recorded response
 record := testsrv.PopServerRecord()
+
+// Inspect recorded http.Request
+host := record.Request.Host
+method := record.Request.Method
+path := record.Request.URL.String()
+...
+
+// Inspect recorded request body
+recReqBody, err := io.ReadAll(record.RequestBody)
+...
+
+// Inspect recorded http.Response
+recResp := record.Response.Result()
+...
 ```
+
+## Advanced usage and integration with ther testing framework
+
+More advanced usage of the gosette.HTTPTestServer can be seen in the [test file](httptestserver_test.go). Tests also show how gosette.HTTPTestServer can be used in combination with the basic Golang testing utilities as well as the [stretchr/testify](https://github.com/stretchr/testify) testing framework.
